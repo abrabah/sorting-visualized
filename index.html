@@ -4,193 +4,55 @@
 <head>
        
     <meta charset="utf-8">
-        <title>Test</title>
+        <title>Sorting visualizion</title>
      
 </head>
  
 <body>
 
-
-<canvas id="canvas" width="400" height="300"></canvas>
-<span><=insertionSort vs bubblesort => </span>
-<canvas id="canvas2" width="400" height="300"></canvas>
+<script type="application/javascript" src="app_bundle.js"></script>
 
 
-<script type="text/javascript">
+<article>
+<section class="sort">
+    <canvas id="canvas" width="400" height="300"></canvas>
+    <section>
+        <h1># Swaps: </h1>
+        <select>
+            <option>Add options</option>
+        </select>
+    </section>
+</section>
+
+<section class="sort">
+    <canvas id="canvas2" width="400" height="300"></canvas>
+    <section>
+        <h1># Swaps: </h1>
+
+        <select>
+            <option>Add options</option>
+        </select>
+    </section>
+</section>
+</article>
 
 
-    function draw(arr, id) {
-        if (arr === undefined)
-            return;
-        var canvas = document.getElementById(id);
-        var ctx = canvas.getContext('2d');
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
+<section>
+    <h1>Data set</h1>
+    <select>
+        <option>select dataset</option>
+    </select>
+    <h1>Speed</h1><select>
+        <option>100 swaps per second</option>
+    </select>
 
-
-        var spacing = Math.floor(canvas.width / arr.length);
-
-        ctx.beginPath();
-        for (var i = 0; i < arr.length; i++) {
-            ctx.moveTo(1 + i * spacing, canvas.height);
-            ctx.lineTo(1 + i * spacing, canvas.height - arr[i])
-        }
-        ctx.stroke()
-    }
-
-    // draw(, 'canvas')
+    <button>
+  START
+    </button>
+</section>
 
 
 
-    function*swap(arr,a,b){
-        var tmp = arr[a];
-        arr[a] = arr[b];
-        arr[b] = tmp;
-        yield arr;
-    }
 
-
-    var sortingAlgorithms = {
-        bubblesort: function*(arr) {
-            for (var i = 0; i < arr.length; i++) {
-                var arrayChange = false;
-                for (var j = 1; j < arr.length - i; j++) {
-                    if (arr[j] < arr[j - 1]) {
-                      yield * swap(arr, j-1, j);
-                        arrayChange = true
-                    }
-                }
-                if (!arrayChange) {
-                    return
-                }
-            }
-        },
-        insertionSort: function* (arr) {
-            for (var i = 1; i < arr.length; i++) {
-                var arrayChange = false;
-                var j = i;
-                while (j > 0 && arr[j - 1] > arr[j]) {
-                    yield*swap(arr,j -1, j)
-                    j--;
-                }
-            }
-        },
-
-        quickSort: function*(arr){
-
-            function *quicksort(a, b){
-                var split = -1;
-                function *partition(a,b){
-                    var sentinel = arr[a];
-                    var i = a - 1;
-                    split = b;
-
-                        while(true){
-
-                            do{
-//                                yield arr;
-                                split--;
-                            } while (arr[split] > sentinel);
-
-                            do {
-//                                yield arr;
-                                i++;
-                            } while (arr[i] < sentinel);
-
-                            if (i < split)
-                                yield*swap(arr,i,split);
-                            else{
-                                split++;
-                                return;
-                            }
-                            }
-                }
-                if ( (b-a) > 1){
-                    yield*partition(a,b);
-                    yield*quicksort(a,split);
-                    yield*quicksort(split, b);
-                }
-            }
-
-            yield*quicksort(0,arr.length);
-        },
-
-        heapSort: function*(arr){
-            var heapSize = arr.length;
-
-            function* maxHeapify(arr,i){
-                var l = ((i + 1) <<1) - 1
-                var r = (i + 1) << 1
-                var max = -1;
-                if( l < heapSize && arr[l] > arr[i]){
-                    max =  l;
-                } else{
-                    max = i;
-                }
-                if ( r < heapSize && arr[r] > arr[max]){
-                    max = r;
-                }
-                if(max != i){
-                    yield *swap(arr,i,max);
-                    yield*maxHeapify(arr,max);
-                }
-            }
-
-            function* buildMaxHeap(arr){
-                for(var i = arr.length>>1 ; i > -1; i--)
-                    yield*maxHeapify(arr,i)
-            }
-
-            yield*buildMaxHeap(arr);
-            for(var i = arr.length -1; i > 0; i--){
-                var tmp = arr[0]
-                arr[0] = arr[i]
-                arr[i] = tmp
-                heapSize--;
-//                yield arr;
-                yield*maxHeapify(arr, 0);
-            }
-        }
-    };
-
-
-    var arr = [228, 264, 175, 54, 272, 298, 280, 19, 222, 224, 251, 174, 287, 183, 62, 285, 104, 279, 236, 282, 285, 48, 242, 70, 135, 290, 14, 76, 128, 178, 134, 287, 73, 9, 272, 277, 238, 251, 295, 159, 106, 246, 32, 92, 60, 25, 76, 163, 3, 244, 76, 220, 223, 18, 289, 289, 7, 3, 65, 66, 180, 130, 284, 184, 70, 256, 160, 8, 206, 155, 166, 244, 32, 130, 35, 91, 154, 43, 185, 89, 286, 261, 8, 140, 210, 296, 129, 148, 298, 125, 214, 109, 254, 197, 293, 24, 152, 84, 263, 290];
-//var arr = [100,50,70]
-
-    var arr1 = arr;
-    var arr2 = arr.slice()
-
-        var generator = sortingAlgorithms.quickSort(arr1);
-        var generator2 = sortingAlgorithms.heapSort(arr2);
-
-        var timer = setInterval(function () {
-            var a = generator.next();
-            var b = generator2.next();
-
-            draw(arr1, 'canvas');
-            draw(arr2, 'canvas2')
-
-
-            if (a.done && b.done) {
-                console.log('done');
-                clearInterval(timer)
-            }
-        }, 10)
-
-
-    function * moo(num) {
-
-        if (num > 1) {
-            yield num;
-            yield*moo(num - 1);
-        }
-
-    }
-
-    
-
-</script>
-
-
- 
 </body>
 </html>
