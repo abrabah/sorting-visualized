@@ -1,5 +1,5 @@
 
-var swap = require('sorting-algorithms/swap');
+var swap = require('_sorting-algorithms/swap');
 
 // Running time O(n^2)
 

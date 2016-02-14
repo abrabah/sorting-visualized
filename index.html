@@ -14,45 +14,37 @@
 
 
 <article>
-<section class="sort">
-    <canvas id="canvas" width="400" height="300"></canvas>
-    <section>
-        <h1># Swaps: </h1>
-        <select>
-            <option>Add options</option>
-        </select>
-    </section>
-</section>
 
-<section class="sort">
-    <canvas id="canvas2" width="400" height="300"></canvas>
-    <section>
-        <h1># Swaps: </h1>
-
-        <select>
-            <option>Add options</option>
-        </select>
+    <section class="sort">
+        <canvas id="canvas-1" width="400" height="300"></canvas>
+        <section>
+            <span># Swaps: <span id="span-swaps-1"></span></span>
+            <select id="select-sorting-1" class="select-sorting"></select>
+        </section>
     </section>
-</section>
+
+    <section class="sort">
+        <canvas id="canvas-2" width="400" height="300"></canvas>
+        <section>
+            <span># Swaps: <span id="span-swaps-2"></span></span>
+            <select id="select-sorting-2" class="select-sorting"></select>
+        </section>
+    </section>
 </article>
 
 
 <section>
-    <h1>Data set</h1>
-    <select>
-        <option>select dataset</option>
+    <span>Data set</span>
+    <select id="select-data-set"></select>
+    <span>Swaps per second</span>
+    <select id="select-swaps-per-second">
+        <option value="1000">1</option>
+        <option value="100">10</option>
+        <option value="20">50</option>
+        <option value="10">100</option>
     </select>
-    <h1>Speed</h1><select>
-        <option>100 swaps per second</option>
-    </select>
-
-    <button>
-  START
-    </button>
+    <button id="btn-start">START</button>
 </section>
-
-
-
 
 </body>
 </html>
