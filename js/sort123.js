@@ -1,29 +1,4 @@
-// draw(, 'canvas')
-
-//
-////var arr = [100,50,70]
-//
-//var arr1 = arr;
-//var arr2 = arr.slice()
-//
-//var generator = quickSort(arr1);
-//var generator2 = bubbleSort(arr2);
-//
-//var timer = setInterval(function () {
-//    var a = generator.next();
-//    var b = generator2.next();
-//
-//    draw(arr1, 'canvas');
-//    draw(arr2, 'canvas2');
-//
-//
-//    if (a.done && b.done) {
-//        console.log('done');
-//        clearInterval(timer)
-//    }
-//}, 10)
-//
-
+require('../scss/makeitshine.scss');
 
 function add_sorting_algorithms_to_selection_tags() {
     var algorithm_selectors = document.getElementsByClassName('select-sorting');
