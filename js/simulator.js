@@ -32,9 +32,17 @@ function draw_array(arr, canvas) {
 var simulator_interval = undefined;
 
 
-module.exports = function () {
-
+function reset() {
     clearInterval(simulator_interval);
+    draw_array(data_sets[select_data_set.value], canvas1);
+    draw_array(data_sets[select_data_set.value], canvas2);
+    span_swaps1.innerHTML = 0;
+    span_swaps2.innerHTML = 0;
+}
+
+
+function start_simulation() {
+    reset();
 
     const dataset = data_sets[select_data_set.value];
 
@@ -48,37 +56,43 @@ module.exports = function () {
     const alg2 = sorting_algorithms[select_sorting_2.value](arr2);
 
 
-    var swaps1 = 0;
-    var swaps2 = 0;
+    var swaps = 0;
 
-    simulator_interval = setInterval(function () {
+    function do_sort_step() {
         var gen1 = alg1.next();
         var gen2 = alg2.next();
         draw_array(arr2, canvas2);
 
-
+        swaps++;
         if (gen1.done) {
             draw_array(arr1, canvas1);
         } else {
             draw_array(gen1.value, canvas1);
-            swaps1++;
+            span_swaps1.innerHTML = swaps;
         }
 
         if (gen2.done) {
             draw_array(arr2, canvas2);
         } else {
             draw_array(gen2.value, canvas2);
-            swaps2++;
+            span_swaps2.innerHTML = swaps;
         }
 
-        span_swaps1.innerHTML = swaps1;
-        span_swaps2.innerHTML = swaps2;
 
-
-        if (gen1.done && gen2.done) {
-            clearInterval(simulator_interval);
+        if (!(gen1.done && gen2.done)) {
+            simulator_interval = setTimeout(do_sort_step, select_swps.value);
         }
-    }, select_swps.value);
+    }
+
+    do_sort_step();
+}
 
 
+module.exports = function () {
+    reset();
+    select_data_set.onchange = function () {
+        clearInterval(simulator_interval);
+        reset();
+    };
+    return start_simulation;
 };
