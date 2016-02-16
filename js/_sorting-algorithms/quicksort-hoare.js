@@ -1,7 +1,7 @@
 
 var swap = require('_sorting-algorithms/swap');
 
-// Running time O(n*ln(n))
+// Running time O(n^2) 
 
 
 module.exports = function*(arr){
