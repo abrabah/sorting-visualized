@@ -61,9 +61,8 @@ function start_simulation() {
     function do_sort_step() {
         var gen1 = alg1.next();
         var gen2 = alg2.next();
-        draw_array(arr2, canvas2);
-
         swaps++;
+
         if (gen1.done) {
             draw_array(arr1, canvas1);
         } else {
