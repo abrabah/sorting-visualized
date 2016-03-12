@@ -1,12 +1,15 @@
 require('../scss/makeitshine.scss');
+import  algorithms from  'sorting-algorithms';
+import data_sets from 'data-sets'
 
 function add_sorting_algorithms_to_selection_tags() {
     var algorithm_selectors = document.getElementsByClassName('select-sorting');
-    const sorting_alogrithms = require('sorting-algorithms');
+
+
 
     for (var i = 0; i < algorithm_selectors.length; i++) {
 
-        for (var key in sorting_alogrithms) {
+        for (var key in algorithms) {
             var opt = document.createElement('option');
             opt.value = key;
             opt.innerHTML = key;
@@ -19,7 +22,7 @@ function add_sorting_algorithms_to_selection_tags() {
 function add_data_sets_to_selection_tag() {
     var selection_data_set = document.getElementById('select-data-set');
 
-    for (var key in require('data-sets')) {
+    for (var key in data_sets) {
         var opt = document.createElement('option');
         opt.value = key;
         opt.innerHTML = key;

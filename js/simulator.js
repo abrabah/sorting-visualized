@@ -1,5 +1,5 @@
-const sorting_algorithms = require('sorting-algorithms');
-const data_sets = require('data-sets');
+import algorithms from  'sorting-algorithms'
+import data_sets from 'data-sets'
 
 
 const canvas1 = document.getElementById('canvas-1');
@@ -52,8 +52,9 @@ function start_simulation() {
     draw_array(arr1, canvas1);
     draw_array(arr2, canvas2);
 
-    const alg1 = sorting_algorithms[select_sorting_1.value](arr1);
-    const alg2 = sorting_algorithms[select_sorting_2.value](arr2);
+
+    const alg1 = algorithms[select_sorting_1.value](arr1);
+    const alg2 = algorithms[select_sorting_2.value](arr2);
 
 
     var swaps = 0;

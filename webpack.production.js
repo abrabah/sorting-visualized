@@ -3,33 +3,18 @@ var path = require('path');
 
 module.exports = {
 
-// Set 'context' for Rails Asset Pipeline
-//   context: __local_dir + '//assets/javascripts',
-
-    entry: {
-        app: [
-            'webpack-dev-server/client?http://localhost:8090/',
-            'webpack/hot/only-dev-server',
-            'babel-polyfill',
-            './js/sort123.js'
-        ]
-    },
-
+    entry: ['babel-polyfill','./js/sort123.js'],
     output: {
-        filename: '[name]_bundle.js', // Will output App_wp_bundle.js
-        publicPath: 'http://localhost:8090/' // Required for webpack-dev-server
+        filename: 'app_bundle.js'
     },
 
-// Require the webpack and react-hot-loader plugins
     plugins: [
-        new webpack.HotModuleReplacementPlugin(),
-        new webpack.NoErrorsPlugin(),
-        new webpack.DefinePlugin({'process.env.NODE_ENV': "\'development\'"}),
+        new webpack.optimize.UglifyJsPlugin({minimize: true})
     ],
 
     resolve: {
         extensions: ['', '.js', '.jsx'],
-        modulesDirectories: ['js','node_modules']
+        modulesDirectories: ['js', 'node_modules']
     },
 
 
@@ -42,7 +27,7 @@ module.exports = {
                 loader: 'babel',
                 query: {
                     cacheDirectory: true,
-                    presets: ['es2015', ]
+                    presets: ['es2015']
                 }
             },
             {
